@@ -1,0 +1,186 @@
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+var intervalsPerFrame = 2;
+var interval_count = 0;
+var frame = 0;
+var numWalkFrames = 4;
+
+var lifeSpan = 8;
+var baseLife = 2;
+
+var wallWidth = 16;
+var backWallHeight = 64;
+var characterWidth = 16;
+var characterHeight = 16;
+
+
+var charVel = 2;
+
+var numCharacters = 12;
+
+var genWidth = canvas.width - characterWidth - wallWidth - wallWidth;
+var genHeight = canvas.width - characterHeight - backWallHeight - wallWidth;
+
+var topBoundary = backWallHeight;
+var botBoundary = backWallHeight+genHeight;
+var leftBoundary = wallWidth;
+var rightBoundary = leftBoundary + genWidth;
+
+var staticRenderFunc = function(){
+
+	ctx.fillStyle = "rgb(100,200,6)";
+	for(var i in characters){
+		//console.log("drawing character "+JSON.stringify(characters[i]));
+		//ctx.fillStyle = characters[i].colour;
+		if(showPlayer){
+			
+		}
+		ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+	}
+}
+
+dirFuncs = [];
+
+dirFuncs[0] = function(character){
+	character.y -= charVel;
+	if(character.y<topBoundary){ 
+		character.y = topBoundary;
+		//If in door way, ignore boundary. check for completion.
+	}
+}
+
+dirFuncs[1] = function(character){
+	character.y += charVel;
+	if(character.y>botBoundary) character.y = botBoundary;
+
+}
+
+dirFuncs[2] = function(character){
+	character.x += charVel;
+	if(character.x>rightBoundary) character.x = rightBoundary;
+
+}
+
+dirFuncs[3] = function(character){
+	character.x -= charVel;
+	if(character.x<leftBoundary) character.x = leftBoundary;
+
+}
+
+var stepRenderFunc = function(){
+	ctx.fillStyle = "rgb(100,200,6)";
+	for(var i in characters){
+		//console.log("drawing character "+JSON.stringify(characters[i]));
+		//ctx.fillStyle = characters[i].colour;
+		//drawFrame(ctx, frame,characters[i].x, characters[i].y, characterWidth, characterHeight);
+		ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
+		characters[i].currDir(characters[i]);
+	}
+
+	console.log("intervalCount: "+interval_count+". frame: "+frame+".");
+	if(interval_count==0){ 
+		frame = (++frame)%(numWalkFrames);
+		//document.getElementById("frameNum").innerHTML = frame;
+	}
+	interval_count = (++interval_count)%intervalsPerFrame;
+
+	if(frame == 0){
+		//Return to static functionality
+		endStep();
+		renderFunc = staticRenderFunc;
+		interval_count = 0;
+		console.log("over");
+	}
+}
+
+var renderFunc = staticRenderFunc;
+
+function drawRoom(){
+	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillRect(0, 0, wallWidth, canvas.height);
+	ctx.fillRect(canvas.width - wallWidth, 0, wallWidth, canvas.height);
+	ctx.fillRect(0, canvas.height - wallWidth, canvas.width, wallWidth);
+
+	ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
+}
+
+//character = {"x":0, "y":0, "dir":[0,1,2,3], "life":10, "currDir":0, "colour":0};//
+var characters = [];
+
+for(var i = 0; i<numCharacters; i++){
+	var newChar = {};
+
+	newChar.x = Math.floor(Math.random()*genWidth)+wallWidth;
+	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
+	newChar.colour = "rgb(0,0,0)";	
+	newChar.currDir = 0;
+	newChar.dir = [0,0,0,0];
+	assignDirections(newChar);
+	characters.push(newChar);
+}
+
+
+setInterval(function() {
+
+		//clear canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		renderFunc();
+		drawRoom();
+		//draw frame in canvas
+	/*	if(inStep){
+    	drawFrame(canvas_context, frame, 0, 0, 96, 164);
+		}
+
+		//Slows frame rate from intended 30 fps
+		if(playing && interval_count==0){ 
+			frame = (++frame)%(patch.frames.length);
+			//document.getElementById("frameNum").innerHTML = frame;
+		}
+		interval_count = (++interval_count)%intervalsPerFrame;		
+		//document.getElementById("layerFeild").type = "hidden";//retrieve layer name if given //might be a relic of abandoned functionality
+		//draw layers section
+		drawLayers(frame);*/
+	},30);
+
+
+function step(dir){
+	for(var i in characters){
+	//	console.log("dirFuncs of "+characters[i].dir[dir]+" = "+dirFuncs[characters[i].dir[dir]]);
+		characters[i].currDir = dirFuncs[characters[i].dir[dir]];
+	}
+	
+	renderFunc = stepRenderFunc;
+}
+
+function endStep(){
+	for(var i in characters){
+		characters[i].life--; 
+		if(characters[i].life==0){
+			assignDirections(characters[i]);
+		}
+	}
+}
+
+function assignDirections(character){
+	for(var i = 0; i<4; i++){
+		character.dir[i] = Math.floor(Math.random()*12)%4;
+	}
+	character.life = Math.floor(Math.random()*lifeSpan)+baseLife;
+}
+
+function assignPlayerDirections(charater){
+	var freeDirs = [false,false,false,false]
+	for(var i = 0; i<4; i++){
+		do{
+		var dir	= Math.floor(Math.random()*12)%4;
+		}while(freeDirs[dir]);
+		character.dir[i] = dir;
+		freeDirs[dir] = true;
+	}
+}
+
+function show(){
+	var showPlayer = true;
+}
