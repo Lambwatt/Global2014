@@ -13,7 +13,7 @@ var wallWidth = 16;
 var backWallHeight = 64;
 var characterWidth = 16;
 var characterHeight = 16;
-
+var showPlayer = false;
 
 var charVel = 2;
 
@@ -31,12 +31,18 @@ var staticRenderFunc = function(){
 
 	ctx.fillStyle = "rgb(100,200,6)";
 	for(var i in characters){
-		//console.log("drawing character "+JSON.stringify(characters[i]));
-		//ctx.fillStyle = characters[i].colour;
 		if(showPlayer){
-			
-		}
-		ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+			//console.log("going to check life. character life = "+characters[i].life);
+			if(characters[i].life<0){
+				//console.log("here?")
+				ctx.fillStyle = "rgb(100,20,60)";	
+				ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+				ctx.fillStyle = "rgb(100,200,6)";
+			}else{
+					ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+			}
+		}else
+			ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
 	}
 }
 
@@ -74,7 +80,20 @@ var stepRenderFunc = function(){
 		//console.log("drawing character "+JSON.stringify(characters[i]));
 		//ctx.fillStyle = characters[i].colour;
 		//drawFrame(ctx, frame,characters[i].x, characters[i].y, characterWidth, characterHeight);
-		ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
+		if(showPlayer){
+			console.log("going to check life. character life = "+characters[i].life);
+			if(characters[i].life<0){
+				console.log("here?");
+				ctx.fillStyle = "rgb(100,20,60)";	
+				ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+				ctx.fillStyle = "rgb(100,200,6)";
+				console.log("showed!");
+			}else{
+					ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+			}
+		}else{
+			ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
+		}
 		characters[i].currDir(characters[i]);
 	}
 
@@ -119,6 +138,10 @@ for(var i = 0; i<numCharacters; i++){
 	assignDirections(newChar);
 	characters.push(newChar);
 }
+
+var player = characters[Math.floor(Math.random()*(numCharacters*4))%numCharacters];
+player.life = -1;
+assignPlayerDirections(player);
 
 
 setInterval(function() {
@@ -170,7 +193,7 @@ function assignDirections(character){
 	character.life = Math.floor(Math.random()*lifeSpan)+baseLife;
 }
 
-function assignPlayerDirections(charater){
+function assignPlayerDirections(character){
 	var freeDirs = [false,false,false,false]
 	for(var i = 0; i<4; i++){
 		do{
@@ -182,5 +205,9 @@ function assignPlayerDirections(charater){
 }
 
 function show(){
-	var showPlayer = true;
+	showPlayer = true;
+}
+
+function hide(){
+	showPlayer = false;
 }
