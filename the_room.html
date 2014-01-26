@@ -1,14 +1,19 @@
 <html>
 	<head id="head">
 		<!--<link rel="stylesheet" type="text/css" href="the_room.css">-->
-  </head>
+		<img id="C0" src="man0.png" style="display:none;" />
+		<img id="C1" src="man1.png" style="display:none;" />  
+		<img id="C2" src="man2.png" style="display:none;" />  
+		<img id="C3" src="man3.png" style="display:none;" />  
+		<img id="C4" src="man4.png" style="display:none;" />    
+	</head>
 	<body>
 		<canvas id="canvas" height=1024 width=1024>This browser does not support canvas</canvas>
 		<script src="the_room.js"></script>	
 		<br>
-		<button id="up" onclick="step(0)">up</button>
-		<button id="down" onclick="step(1)">down</button>
-		<button id="right" onclick="step(2)">right</button>
-		<button id="left" onclick="step(3)">left</button>
+		<button id="up" onclick="step(0)">this way</button>
+		<button id="down" onclick="step(1)">that way</button>
+		<button id="right" onclick="step(2)">a third way</button>
+		<button id="left" onclick="step(3)">another way</button>
 	</body>
 </html>

@@ -10,9 +10,9 @@ var lifeSpan = 8;
 var baseLife = 2;
 
 var wallWidth = 16;
-var backWallHeight = 64;
-var characterWidth = 16;
-var characterHeight = 16;
+var backWallHeight = 64;//317 * 803
+var characterWidth = 64;
+var characterHeight = 162;
 var showPlayer = false;
 
 var charVel = 2;
@@ -27,6 +27,11 @@ var botBoundary = backWallHeight+genHeight;
 var leftBoundary = wallWidth;
 var rightBoundary = leftBoundary + genWidth;
 
+var persons = [];
+for(var i = 0; i<5; i++){
+	persons.push(document.getElementById("C"+(i+1)));
+}
+
 var staticRenderFunc = function(){
 
 	ctx.fillStyle = "rgb(100,200,6)";
@@ -35,14 +40,14 @@ var staticRenderFunc = function(){
 			//console.log("going to check life. character life = "+characters[i].life);
 			if(characters[i].life<0){
 				//console.log("here?")
-				ctx.fillStyle = "rgb(100,20,60)";	
-				ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
-				ctx.fillStyle = "rgb(100,200,6)";
+//				ctx.fillStyle = "rgb(100,20,60)";	
+				ctx.drawImage(persons[4], characters[i].x, characters[i].y, characterWidth, characterHeight);
+//				ctx.fillStyle = "rgb(100,200,6)";
 			}else{
-					ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
-			}
+					ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);			}
 		}else
-			ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+			//console.log(JSON.stringify(persons[characters[i].colour]));
+			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 	}
 }
 
@@ -83,16 +88,17 @@ var stepRenderFunc = function(){
 		if(showPlayer){
 			console.log("going to check life. character life = "+characters[i].life);
 			if(characters[i].life<0){
-				console.log("here?");
-				ctx.fillStyle = "rgb(100,20,60)";	
-				ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
-				ctx.fillStyle = "rgb(100,200,6)";
-				console.log("showed!");
+			//	console.log("here?");
+			//	ctx.fillStyle = "rgb(100,20,60)";	
+					ctx.drawImage(persons[4], characters[i].x, characters[i].y, characterWidth, characterHeight);
+//				ctx.fillStyle = "rgb(100,200,6)";
+			//	console.log("showed!");
 			}else{
-					ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);
+						ctx.drawImage(persons[caracters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 			}
 		}else{
-			ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
+			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
+			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 		}
 		characters[i].currDir(characters[i]);
 	}
@@ -132,7 +138,7 @@ for(var i = 0; i<numCharacters; i++){
 
 	newChar.x = Math.floor(Math.random()*genWidth)+wallWidth;
 	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
-	newChar.colour = "rgb(0,0,0)";	
+	newChar.colour = Math.floor(Math.random()*12)%4;	
 	newChar.currDir = 0;
 	newChar.dir = [0,0,0,0];
 	assignDirections(newChar);
