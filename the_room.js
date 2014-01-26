@@ -53,18 +53,33 @@ var staticRenderFunc = function(){
 
 dirFuncs = [];
 
-dirFuncs[0] = function(character){
+dirFuncs[0] = function(character, i){
 	character.y -= charVel;
 	if(character.y<topBoundary){ 
 		character.y = topBoundary;
 		//If in door way, ignore boundary. check for completion.
 	}
+	var j = parseInt(i);
+	while(j>0 && characters[j-1].y > character.y){
+		var tmp = characters[j-1];
+		characters[j-1] = character;
+		characters[j] = tmp;
+		j--;
+	}
 }
 
-dirFuncs[1] = function(character){
+dirFuncs[1] = function(character, i){
 	character.y += charVel;
 	if(character.y>botBoundary) character.y = botBoundary;
 
+	var j = parseInt(i);
+	while(j<characters.length-1 && characters[j+1].y < character.y){
+		var tmp = characters[j+1];
+		characters[j+1] = character;
+		characters[j] = tmp;
+		j++;
+	}
+	
 }
 
 dirFuncs[2] = function(character){
@@ -100,7 +115,7 @@ var stepRenderFunc = function(){
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
 			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 		}
-		characters[i].currDir(characters[i]);
+		characters[i].currDir(characters[i], i);
 	}
 
 	console.log("intervalCount: "+interval_count+". frame: "+frame+".");
@@ -143,6 +158,64 @@ for(var i = 0; i<numCharacters; i++){
 	newChar.dir = [0,0,0,0];
 	assignDirections(newChar);
 	characters.push(newChar);
+}
+characters = sortPeople(characters);
+
+function printCharacters(){
+	var returnString = "[";
+	returnString+=characters[0].y;
+	for(var i =1; i<characters.length; i++){	
+		returnString+=", "+characters[i].y;
+	}
+	returnString+="]";
+	console.log("Characters: "+returnString);
+}
+
+function sortPeople(people){
+	
+	if(people.length==1){
+		return people;
+	}
+
+	var left = [];
+	for(var i = 0; i<people.length/2; i++){
+		left.push(people[i]);
+	}	
+
+	var right = []
+	for(; i<people.length; i++){
+		right.push(people[i]);
+	}	
+
+	left = sortPeople(left);
+	right = sortPeople(right);
+
+	var result = [];
+	var j = 0;
+	for(i=0; i+j<left.length+right.length;){
+		if(i==left.length){	
+			result.push(right[j]);
+			j++;
+		}else if(j==right.length){
+			result.push(left[i]);
+			i++;
+		}else if(left[i].y<=right[j].y){
+			result.push(left[i]);
+			i++;
+		}else{
+			result.push(right[j]);
+			j++;
+		}
+	}	
+
+	var returnString = "[";
+	returnString+=result[0].y;
+	for(var i =1; i<result.length; i++){	
+		returnString+=", "+result[i].y;
+	}
+	returnString+="]";
+	console.log("returning: "+returnString);
+	return result;
 }
 
 var player = characters[Math.floor(Math.random()*(numCharacters*4))%numCharacters];

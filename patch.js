@@ -14,8 +14,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 
 var patch = {"width":96, "height":164, "max_id":3, "layer_names":["leg1","leg2","torso"], "frames":[
-	[{"id":0, "img":"leg", "x":71, "y":100, "width":32, "height":64},
-	{"id":1,"img":"leg", "x":25, "y":80, "width":32, "height":64},
+	[{"id":0, "img":"leg", "x":71, "y":100, "width":317, "height":803},
+	{"id":1,"img":"leg", "x":25, "y":80, "width":317, "height":803},
 	{"id":2,"img":"torso", "x":0, "y":0, "width":96, "height":96}],
 
 	[{"id":0,"img":"leg", "x":71, "y":80, "width":32, "height":64},
@@ -24,8 +24,14 @@ var patch = {"width":96, "height":164, "max_id":3, "layer_names":["leg1","leg2",
 
 
 //Frame rendering function
-function drawFrame(canvas_context, frameNum, x, y, width, height){
+function drawFrame(canvas_context, frameNum, x, y, width, height, alpha){
 	
+	var oldAlpha = canvas_context.globalAlpha;
+
+	if(alpha){
+		canvas_context.globalAlpha = alpha;
+	}
+
 	if(patch.frames.length != 0){
 		//get layers for a frame and set width and height if they are not provided.
 		var patchLayers = patch.frames[frameNum];
@@ -58,5 +64,10 @@ function drawFrame(canvas_context, frameNum, x, y, width, height){
 				canvas_context.lineWidth = 1;
 			}		
 		}
+
+		
 	}
+		
+	canvas_context.globalAlpha = oldAlpha;
+
 }
