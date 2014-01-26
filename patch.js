@@ -13,25 +13,128 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   alert('The File APIs are not fully supported in this browser.');
 }
 
-var patch = {"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
-	[{"id":0, "img":"sidewayswalk1", "x":10, "y":506, "width":286, "height":186},
-	{"id":1,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
+var patches = 
+[
 
-	[{"id":0,"img":"sidewayswalk2", "x":10, "y":506, "width":286, "height":186},
-	{"id":2,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"frontman1legs1", "x":10, "y":506, "width":286, "height":186},
+	{"id":1,"img":"frontman1", "x":21, "y":0, "width":275, "height":633}],
 
-	[{"id":0,"img":"sidewayswalk3", "x":10, "y":506, "width":286, "height":186},
-	{"id":3,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
+	[{"id":0,"img":"frontman1legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman1", "x":21, "y":0, "width":275, "height":633}],
 
-	[{"id":0,"img":"sidewayswalk2", "x":10, "y":506, "width":286, "height":186},
-	{"id":2,"img":"mann", "x":21, "y":0, "width":275, "height":633}]
+	[{"id":0,"img":"frontman1legs3", "x":10, "y":506, "width":286, "height":186},
+	{"id":3,"img":"frontman1", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman1legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman1", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"sidewalkingman1legs1", "x":83, "y":506, "width":213, "height":186},
+	{"id":1,"img":"sidewalkingman1", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman1legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman1", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman1legs3", "x":83, "y":506, "width":213, "height":186},
+	{"id":3,"img":"sidewalkingman1", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman1legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman1", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"frontman2legs1", "x":10, "y":506, "width":286, "height":186},
+	{"id":1,"img":"frontman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman2legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman2legs3", "x":10, "y":506, "width":286, "height":186},
+	{"id":3,"img":"frontman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman2legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman2", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"sidewalkingman2legs1", "x":83, "y":506, "width":213, "height":186},
+	{"id":1,"img":"sidewalkingman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman2legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman2legs3", "x":83, "y":506, "width":213, "height":186},
+	{"id":3,"img":"sidewalkingman2", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman2legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman2", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"frontman3legs1", "x":10, "y":506, "width":286, "height":186},
+	{"id":1,"img":"frontman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman3legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman3legs3", "x":10, "y":506, "width":286, "height":186},
+	{"id":3,"img":"frontman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman3legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman3", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"sidewalkingman3legs1", "x":83, "y":506, "width":213, "height":186},
+	{"id":1,"img":"sidewalkingman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman3legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman3legs3", "x":83, "y":506, "width":213, "height":186},
+	{"id":3,"img":"sidewalkingman3", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman3legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman3", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"frontman4legs1", "x":10, "y":506, "width":286, "height":186},
+	{"id":1,"img":"frontman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman4legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman4legs3", "x":10, "y":506, "width":286, "height":186},
+	{"id":3,"img":"frontman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"frontman4legs2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"frontman4", "x":21, "y":0, "width":275, "height":633}]
+]},
+
+{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"sidewalkingman4legs1", "x":83, "y":506, "width":213, "height":186},
+	{"id":1,"img":"sidewalkingman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman4legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman4legs3", "x":83, "y":506, "width":213, "height":186},
+	{"id":3,"img":"sidewalkingman4", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewalkingman4legs2", "x":83, "y":506, "width":213, "height":186},
+	{"id":2,"img":"sidewalkingman4", "x":21, "y":0, "width":275, "height":633}]
 ]}
+
+]
 
 
 //Frame rendering function
 function drawFrame(canvas_context, frameNum, x, y, width, height, patchIndex, alpha){
 	
-	//var patch = patches[patchIndex];
+	var patch = patches[patchIndex];
 
 	var oldAlpha = canvas_context.globalAlpha;
 

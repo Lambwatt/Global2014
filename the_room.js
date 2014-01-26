@@ -53,7 +53,8 @@ var staticRenderFunc = function(){
 	}
 }
 
-dirFuncs = [];
+var dirFuncs = [];
+var animMod = [0,0,1,1];
 
 dirFuncs[0] = function(character, i){
 	character.y -= charVel;
@@ -111,13 +112,13 @@ var stepRenderFunc = function(){
 //				ctx.fillStyle = "rgb(100,200,6)";
 			//	console.log("showed!");
 			}else{
-					drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight);
+					drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
 					//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 			}
 		}else{
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
 			//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
-			drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight);
+			drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
 		}
 		characters[i].currDir(characters[i], i);
 	}
@@ -154,7 +155,7 @@ function drawBackground(){
 	ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
 }
 
-//character = {"x":0, "y":0, "dir":[0,1,2,3], "life":10, "currDir":0, "colour":0};//
+//character = {"x":0, "y":0, "dir":[0,1,2,3], "life":10, "currDir":0, "colour":0, animDir:0};//
 var characters = [];
 
 for(var i = 0; i<numCharacters; i++){
@@ -162,8 +163,9 @@ for(var i = 0; i<numCharacters; i++){
 
 	newChar.x = Math.floor(Math.random()*genWidth)+wallWidth;
 	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
-	newChar.colour = Math.floor(Math.random()*12)%4;	
+	newChar.colour = Math.floor(Math.random()*12)%4;
 	newChar.currDir = 0;
+	newChar.animIndex = 0;
 	newChar.dir = [0,0,0,0];
 	assignDirections(newChar);
 	characters.push(newChar);
@@ -260,6 +262,7 @@ function step(dir){
 	for(var i in characters){
 	//	console.log("dirFuncs of "+characters[i].dir[dir]+" = "+dirFuncs[characters[i].dir[dir]]);
 		characters[i].currDir = dirFuncs[characters[i].dir[dir]];
+		characters[i].animIndex = characters[i].colour*2 + animMod[characters[i].dir[dir]];
 	}
 	
 	renderFunc = stepRenderFunc;
