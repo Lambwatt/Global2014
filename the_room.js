@@ -60,7 +60,7 @@ dirFuncs[0] = function(character, i){
 		//If in door way, ignore boundary. check for completion.
 	}
 	var j = parseInt(i);
-	while(j>0 && characters[j-1].y < character.y){
+	while(j>0 && characters[j-1].y > character.y){
 		var tmp = characters[j-1];
 		characters[j-1] = character;
 		characters[j] = tmp;
@@ -73,13 +73,13 @@ dirFuncs[1] = function(character, i){
 	if(character.y>botBoundary) character.y = botBoundary;
 
 	var j = parseInt(i);
-	while(j<characters.length-1 && characters[j+1].y > character.y){
+	while(j<characters.length-1 && characters[j+1].y < character.y){
 		var tmp = characters[j+1];
 		characters[j+1] = character;
 		characters[j] = tmp;
 		j++;
 	}
-
+	
 }
 
 dirFuncs[2] = function(character){
@@ -159,6 +159,17 @@ for(var i = 0; i<numCharacters; i++){
 	assignDirections(newChar);
 	characters.push(newChar);
 }
+characters = sortPeople(characters);
+
+function printCharacters(){
+	var returnString = "[";
+	returnString+=characters[0].y;
+	for(var i =1; i<characters.length; i++){	
+		returnString+=", "+characters[i].y;
+	}
+	returnString+="]";
+	console.log("Characters: "+returnString);
+}
 
 function sortPeople(people){
 	
@@ -171,6 +182,7 @@ function sortPeople(people){
 		left.push(people[i]);
 	}	
 
+	var right = []
 	for(; i<people.length; i++){
 		right.push(people[i]);
 	}	
@@ -178,7 +190,32 @@ function sortPeople(people){
 	left = sortPeople(left);
 	right = sortPeople(right);
 
-		
+	var result = [];
+	var j = 0;
+	for(i=0; i+j<left.length+right.length;){
+		if(i==left.length){	
+			result.push(right[j]);
+			j++;
+		}else if(j==right.length){
+			result.push(left[i]);
+			i++;
+		}else if(left[i].y<=right[j].y){
+			result.push(left[i]);
+			i++;
+		}else{
+			result.push(right[j]);
+			j++;
+		}
+	}	
+
+	var returnString = "[";
+	returnString+=result[0].y;
+	for(var i =1; i<result.length; i++){	
+		returnString+=", "+result[i].y;
+	}
+	returnString+="]";
+	console.log("returning: "+returnString);
+	return result;
 }
 
 var player = characters[Math.floor(Math.random()*(numCharacters*4))%numCharacters];
