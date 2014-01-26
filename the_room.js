@@ -29,7 +29,7 @@ var rightBoundary = leftBoundary + genWidth;
 
 var persons = [];
 for(var i = 0; i<5; i++){
-	persons.push(document.getElementById("C"+(i+1)));
+	persons.push(document.getElementById("C"+(i)));
 }
 
 var staticRenderFunc = function(){
@@ -94,7 +94,7 @@ var stepRenderFunc = function(){
 //				ctx.fillStyle = "rgb(100,200,6)";
 			//	console.log("showed!");
 			}else{
-						ctx.drawImage(persons[caracters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+					ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 			}
 		}else{
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
