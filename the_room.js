@@ -15,8 +15,8 @@ var characterWidth = 64;
 var characterHeight = 130;
 var showPlayer = false;
 
-var door_start_x = 450;
-var door_end_x = 550;
+var door_start_x = 429;
+var door_end_x = 509;
 
 var allStop = false;
 
@@ -68,7 +68,8 @@ dirFuncs[0] = function(character, i){
 	character.y -= charVel;
 	if(character.y<topBoundary){ 
 
-		if(character.x > door_start_x && character.x > door_end_x  && character.life<0){
+		console.log("start?: "+(character.x > door_start_x)+" end: "+(character.x > door_end_x)+" life: "+(character.life<0));
+		if(character.x > door_start_x && character.x < door_end_x  && character.life<0){
 			if(character.y<=0){
 				allStop=true;
 			}
@@ -119,7 +120,7 @@ var stepRenderFunc = function(){
 		//ctx.fillStyle = characters[i].colour;
 		//drawFrame(ctx, frame,characters[i].x, characters[i].y, characterWidth, characterHeight);
 		if(showPlayer){
-			console.log("going to check life. character life = "+characters[i].life);
+			//console.log("going to check life. character life = "+characters[i].life);
 			if(characters[i].life<0){
 			//	console.log("here?");
 			//	ctx.fillStyle = "rgb(100,20,60)";	
@@ -138,7 +139,7 @@ var stepRenderFunc = function(){
 		characters[i].currDir(characters[i], i);
 	}
 
-	console.log("intervalCount: "+interval_count+". frame: "+frame+".");
+	//console.log("intervalCount: "+interval_count+". frame: "+frame+".");
 	if(interval_count==0){ 
 		frame = (++frame)%(numWalkFrames);
 		//document.getElementById("frameNum").innerHTML = frame;
@@ -181,8 +182,8 @@ for(var i = 0; i<numCharacters; i++){
 
 	newChar.x = Math.floor(Math.random()*genWidth)+wallWidth;
 	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
-	console.log(newChar.x+" chosen from "+wallWidth+" to "+(genWidth+wallWidth));
-	console.log(newChar.y+" chosen from "+backWallHeight+" to "+(genHeight+backWallHeight));
+	//console.log(newChar.x+" chosen from "+wallWidth+" to "+(genWidth+wallWidth));
+	//console.log(newChar.y+" chosen from "+backWallHeight+" to "+(genHeight+backWallHeight));
 	newChar.colour = Math.floor(Math.random()*12)%2;
 	newChar.currDir = 0;
 	newChar.animIndex = 0;
