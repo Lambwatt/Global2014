@@ -19,8 +19,11 @@ var charVel = 1;
 
 var numCharacters = 12;
 
+
 var genWidth = canvas.width - characterWidth - wallWidth - wallWidth;
-var genHeight = canvas.width - characterHeight - backWallHeight - wallWidth;
+console.log("genWidth = "+genWidth);
+var genHeight = canvas.height - characterHeight - backWallHeight - wallWidth;
+console.log("genHeight = "+genHeight);
 
 var topBoundary = backWallHeight;
 var botBoundary = backWallHeight+genHeight;
@@ -112,13 +115,13 @@ var stepRenderFunc = function(){
 //				ctx.fillStyle = "rgb(100,200,6)";
 			//	console.log("showed!");
 			}else{
-					drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
-					//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+					//drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
+					ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 			}
 		}else{
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
-			//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
-			drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
+			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+			//drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
 		}
 		characters[i].currDir(characters[i], i);
 	}
@@ -163,6 +166,8 @@ for(var i = 0; i<numCharacters; i++){
 
 	newChar.x = Math.floor(Math.random()*genWidth)+wallWidth;
 	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
+	console.log(newChar.x+" chosen from "+wallWidth+" to "+(genWidth+wallWidth));
+	console.log(newChar.y+" chosen from "+backWallHeight+" to "+(genHeight+backWallHeight));
 	newChar.colour = Math.floor(Math.random()*12)%4;
 	newChar.currDir = 0;
 	newChar.animIndex = 0;
