@@ -15,10 +15,14 @@ var characterWidth = 64;
 var characterHeight = 130;
 var showPlayer = false;
 
+var door_start_x = 450;
+var door_end_x = 550;
+
+var allStop = false;
+
 var charVel = 1;
 
 var numCharacters = 12;
-
 
 var genWidth = canvas.width - characterWidth - wallWidth - wallWidth;
 console.log("genWidth = "+genWidth);
@@ -47,6 +51,7 @@ var staticRenderFunc = function(){
 				//console.log("here?")
 //				ctx.fillStyle = "rgb(100,20,60)";	
 				ctx.drawImage(persons[4], characters[i].x, characters[i].y, characterWidth, characterHeight);
+				//drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight, characters[i].animIndex);
 //				ctx.fillStyle = "rgb(100,200,6)";
 			}else{
 					ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);			}
@@ -62,7 +67,14 @@ var animMod = [0,0,1,1];
 dirFuncs[0] = function(character, i){
 	character.y -= charVel;
 	if(character.y<topBoundary){ 
-		character.y = topBoundary;
+
+		if(character.x > door_start_x && character.x > door_end_x  && character.life<0){
+			if(character.y<=0){
+				allStop=true;
+			}
+		}else{
+			character.y = topBoundary;
+		}
 		//If in door way, ignore boundary. check for completion.
 	}
 	var j = parseInt(i);
@@ -133,7 +145,7 @@ var stepRenderFunc = function(){
 	}
 	interval_count = (++interval_count)%intervalsPerFrame;
 
-	if(frame == 0){
+	if(frame == 0 || allStop){
 		//Return to static functionality
 		endStep();
 		renderFunc = staticRenderFunc;
@@ -154,8 +166,11 @@ function drawRoom(){
 }
 
 function drawBackground(){
-	ctx.fillStyle = "rgb(0,0,0)";
-	ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
+	//ctx.fillStyle = "rgb(0,0,0)";
+	//ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
+	
+	ctx.drawImage(document.getElementById("bg"), wallWidth, 0, canvas.width-wallWidth - wallWidth, canvas.height-wallWidth);
+	ctx.drawImage(document.getElementById("door"), wallWidth, 0, canvas.width-wallWidth - wallWidth, canvas.height);
 }
 
 //character = {"x":0, "y":0, "dir":[0,1,2,3], "life":10, "currDir":0, "colour":0, animDir:0};//
@@ -168,7 +183,7 @@ for(var i = 0; i<numCharacters; i++){
 	newChar.y = Math.floor(Math.random()*genHeight)+backWallHeight;
 	console.log(newChar.x+" chosen from "+wallWidth+" to "+(genWidth+wallWidth));
 	console.log(newChar.y+" chosen from "+backWallHeight+" to "+(genHeight+backWallHeight));
-	newChar.colour = Math.floor(Math.random()*12)%4;
+	newChar.colour = Math.floor(Math.random()*12)%2;
 	newChar.currDir = 0;
 	newChar.animIndex = 0;
 	newChar.dir = [0,0,0,0];
@@ -244,9 +259,10 @@ setInterval(function() {
 		//clear canvas
 		ctx.clearRect(wallWidth, 0, canvas.width-wallWidth - wallWidth, canvas.height-wallWidth);
 
-		renderFunc();
 		drawBackground();
-		//draw frame in canvas
+		renderFunc();
+
+				//draw frame in canvas
 	/*	if(inStep){
     	drawFrame(canvas_context, frame, 0, 0, 96, 164);
 		}
@@ -264,6 +280,8 @@ setInterval(function() {
 
 
 function step(dir){
+	if(allStop) return;
+
 	for(var i in characters){
 	//	console.log("dirFuncs of "+characters[i].dir[dir]+" = "+dirFuncs[characters[i].dir[dir]]);
 		characters[i].currDir = dirFuncs[characters[i].dir[dir]];
@@ -300,10 +318,4 @@ function assignPlayerDirections(character){
 	}
 }
 
-function show(){
-	showPlayer = true;
-}
 
-function hide(){
-	showPlayer = false;
-}

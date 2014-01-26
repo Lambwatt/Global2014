@@ -70,9 +70,9 @@ var patches =
 
 	[{"id":0,"img":"sidewalkingman2legs2", "x":83, "y":506, "width":213, "height":186},
 	{"id":2,"img":"sidewalkingman2", "x":21, "y":0, "width":275, "height":633}]
-]},
+]}
 
-{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+/*{"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
 	[{"id":0, "img":"frontman3legs1", "x":10, "y":506, "width":286, "height":186},
 	{"id":1,"img":"frontman3", "x":21, "y":0, "width":275, "height":633}],
 
@@ -126,7 +126,7 @@ var patches =
 
 	[{"id":0,"img":"sidewalkingman4legs2", "x":83, "y":506, "width":213, "height":186},
 	{"id":2,"img":"sidewalkingman4", "x":21, "y":0, "width":275, "height":633}]
-]}
+]}*/
 
 ]
 
