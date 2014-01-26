@@ -1,7 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var intervalsPerFrame = 2;
+var intervalsPerFrame = 5;
 var interval_count = 0;
 var frame = 0;
 var numWalkFrames = 4;
@@ -10,12 +10,12 @@ var lifeSpan = 8;
 var baseLife = 2;
 
 var wallWidth = 16;
-var backWallHeight = 64;//317 * 803
+var backWallHeight = 162;//317 * 803
 var characterWidth = 64;
-var characterHeight = 162;
+var characterHeight = 130;
 var showPlayer = false;
 
-var charVel = 2;
+var charVel = 1;
 
 var numCharacters = 12;
 
@@ -111,11 +111,13 @@ var stepRenderFunc = function(){
 //				ctx.fillStyle = "rgb(100,200,6)";
 			//	console.log("showed!");
 			}else{
-					ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+					drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight);
+					//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 			}
 		}else{
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
-			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+			//ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
+			drawFrame(ctx, frame, characters[i].x, characters[i].y, characterWidth, characterHeight);
 		}
 		characters[i].currDir(characters[i], i);
 	}

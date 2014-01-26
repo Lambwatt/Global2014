@@ -13,19 +13,26 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   alert('The File APIs are not fully supported in this browser.');
 }
 
-var patch = {"width":96, "height":164, "max_id":3, "layer_names":["leg1","leg2","torso"], "frames":[
-	[{"id":0, "img":"leg", "x":71, "y":100, "width":317, "height":803},
-	{"id":1,"img":"leg", "x":25, "y":80, "width":317, "height":803},
-	{"id":2,"img":"torso", "x":0, "y":0, "width":96, "height":96}],
+var patch = {"width":296, "height":692, "max_id":4, "layer_names":["Torso","leg1","leg2","leg3"], "frames":[
+	[{"id":0, "img":"sidewayswalk1", "x":10, "y":506, "width":286, "height":186},
+	{"id":1,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
 
-	[{"id":0,"img":"leg", "x":71, "y":80, "width":32, "height":64},
-	{"id":1,"img":"leg", "x":25, "y":100, "width":32, "height":64},
-	{"id":2,"img":"torso", "x":16, "y":16, "width":96, "height":96}]]}
+	[{"id":0,"img":"sidewayswalk2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewayswalk3", "x":10, "y":506, "width":286, "height":186},
+	{"id":3,"img":"mann", "x":21, "y":0, "width":275, "height":633}],
+
+	[{"id":0,"img":"sidewayswalk2", "x":10, "y":506, "width":286, "height":186},
+	{"id":2,"img":"mann", "x":21, "y":0, "width":275, "height":633}]
+]}
 
 
 //Frame rendering function
-function drawFrame(canvas_context, frameNum, x, y, width, height, alpha){
+function drawFrame(canvas_context, frameNum, x, y, width, height, patchIndex, alpha){
 	
+	//var patch = patches[patchIndex];
+
 	var oldAlpha = canvas_context.globalAlpha;
 
 	if(alpha){
@@ -53,7 +60,7 @@ function drawFrame(canvas_context, frameNum, x, y, width, height, alpha){
 				patchLayers[l].height * heightRatio);
 	
 			//if selected, show selection highlighting
-			if(l == canvas_selection_index){
+			/*if(l == canvas_selection_index){
 				canvas_context.lineWidth = 5;
 				canvas_context.strokeStyle = "rgb(100,200,100)";//Make thicker and more apparent	
 				canvas_context.strokeRect(
@@ -62,7 +69,7 @@ function drawFrame(canvas_context, frameNum, x, y, width, height, alpha){
 					patchLayers[l].width * widthRatio,
 					patchLayers[l].height * heightRatio);
 				canvas_context.lineWidth = 1;
-			}		
+			}		*/
 		}
 
 		
