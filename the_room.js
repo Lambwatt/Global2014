@@ -53,17 +53,32 @@ var staticRenderFunc = function(){
 
 dirFuncs = [];
 
-dirFuncs[0] = function(character){
+dirFuncs[0] = function(character, i){
 	character.y -= charVel;
 	if(character.y<topBoundary){ 
 		character.y = topBoundary;
 		//If in door way, ignore boundary. check for completion.
 	}
+	var j = parseInt(i);
+	while(j>0 && characters[j-1].y < character.y){
+		var tmp = characters[j-1];
+		characters[j-1] = character;
+		characters[j] = tmp;
+		j--;
+	}
 }
 
-dirFuncs[1] = function(character){
+dirFuncs[1] = function(character, i){
 	character.y += charVel;
 	if(character.y>botBoundary) character.y = botBoundary;
+
+	var j = parseInt(i);
+	while(j<characters.length-1 && characters[j+1].y > character.y){
+		var tmp = characters[j+1];
+		characters[j+1] = character;
+		characters[j] = tmp;
+		j++;
+	}
 
 }
 
@@ -100,7 +115,7 @@ var stepRenderFunc = function(){
 			//ctx.fillRect(characters[i].x, characters[i].y, characterWidth, characterHeight);//Use drawframe here instead
 			ctx.drawImage(persons[characters[i].colour], characters[i].x, characters[i].y, characterWidth, characterHeight);
 		}
-		characters[i].currDir(characters[i]);
+		characters[i].currDir(characters[i], i);
 	}
 
 	console.log("intervalCount: "+interval_count+". frame: "+frame+".");
@@ -143,6 +158,27 @@ for(var i = 0; i<numCharacters; i++){
 	newChar.dir = [0,0,0,0];
 	assignDirections(newChar);
 	characters.push(newChar);
+}
+
+function sortPeople(people){
+	
+	if(people.length==1){
+		return people;
+	}
+
+	var left = [];
+	for(var i = 0; i<people.length/2; i++){
+		left.push(people[i]);
+	}	
+
+	for(; i<people.length; i++){
+		right.push(people[i]);
+	}	
+
+	left = sortPeople(left);
+	right = sortPeople(right);
+
+		
 }
 
 var player = characters[Math.floor(Math.random()*(numCharacters*4))%numCharacters];
