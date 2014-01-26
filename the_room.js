@@ -27,6 +27,8 @@ var botBoundary = backWallHeight+genHeight;
 var leftBoundary = wallWidth;
 var rightBoundary = leftBoundary + genWidth;
 
+drawRoom();
+
 var persons = [];
 for(var i = 0; i<5; i++){
 	persons.push(document.getElementById("C"+(i)));
@@ -142,6 +144,11 @@ function drawRoom(){
 	ctx.fillRect(canvas.width - wallWidth, 0, wallWidth, canvas.height);
 	ctx.fillRect(0, canvas.height - wallWidth, canvas.width, wallWidth);
 
+	//ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
+}
+
+function drawBackground(){
+	ctx.fillStyle = "rgb(0,0,0)";
 	ctx.fillRect(wallWidth, 0, genWidth+characterWidth, backWallHeight);
 }
 
@@ -226,10 +233,10 @@ assignPlayerDirections(player);
 setInterval(function() {
 
 		//clear canvas
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(wallWidth, 0, canvas.width-wallWidth - wallWidth, canvas.height-wallWidth);
 
 		renderFunc();
-		drawRoom();
+		drawBackground();
 		//draw frame in canvas
 	/*	if(inStep){
     	drawFrame(canvas_context, frame, 0, 0, 96, 164);
